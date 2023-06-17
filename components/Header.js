@@ -30,7 +30,52 @@ export default function Header() {
           alt="logo"
           className="w-44 pb-10 md:pb-0 object-contain"
         />
+        
         <div className="flex items-center space-x-5 flex-1 justify-end w-full">
+        <div className="flex relative">
+          {/* avatar */}
+        <div className="h-10 w-10 ml-4 sm:ml-8 -mr-12 rounded-full overflow-hidden flex relative">
+        <Image
+          // src={user.photoURL}
+          alt="avatar"
+          className="bg-pink-500 h-full w-full object-cover cursor-pointer"
+          // onClick={handleClick}
+        />
+      </div>
+      <div className="h-10 w-10 ml-4 sm:ml-8 rounded-full overflow-hidden flex relative">
+        <Image
+          // src={user.photoURL}
+          alt="avatar"
+          className="bg-pink-500 h-full w-full object-cover cursor-pointer"
+          // onClick={handleClick}
+        />
+      </div>
+      <div className="h-10 w-10 sm:ml-8 rounded-full overflow-hidden flex relative">
+        <Image
+          // src={user.photoURL}
+          alt="avatar"
+          className="bg-pink-500 h-full w-full object-cover cursor-pointer"
+          // onClick={handleClick}
+        />
+      </div>
+      <div className="h-10 w-10 ml-4 sm:ml-8 rounded-full overflow-hidden flex relative">
+        <Image
+          // src={user.photoURL}
+          alt="avatar"
+          className="bg-pink-500 h-full w-full object-cover cursor-pointer"
+          // onClick={handleClick}
+        />
+      </div>
+      <div className="h-10 w-10 ml-4 sm:ml-8 rounded-full overflow-hidden flex relative">
+        <Image
+          // src={user.photoURL}
+          alt="avatar"
+          className="bg-pink-500 h-full w-full object-cover cursor-pointer"
+          // onClick={handleClick}
+        />
+      </div>
+        </div>
+        
           {/* search box */}
           <form className="flex items-center space-x-5 bg-white rounded-md p-2 shadow-md flex-1 md:flex-initial">
             <MagnifyingGlassIcon className="h-6 w-6 text-gray-400" />
@@ -43,15 +88,13 @@ export default function Header() {
               Search
             </button>
           </form>
-          {/* avatar */}
-          <div className="h-10 w-10 ml-4 sm:ml-8 rounded-full overflow-hidden">
-            <Image
-              // src={user.photoURL}
-              alt="avatar"
-              className="bg-pink-500 h-full w-full object-cover cursor-pointer"
-              // onClick={handleClick}
-            />
+          {/* Share Button */}
+          <div>
+            <button className="bg-pink-500 px-4 rounded-lg py-2 text-white mr-2 shadow-lg">
+            Share
+            </button>
           </div>
+         
         </div>
       </div>
       {/* select months */}
