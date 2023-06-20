@@ -1,8 +1,23 @@
+'use client'
+import React, { useState } from 'react';
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import TodoCard from "./TodoCard";
 
+
+
 const Column = ({ column, rows, index }) => {
+  const [textFields, setTextFields] = useState([]);
+
+  const handleAddTextField = () => {
+    setTextFields([...textFields, ""]); // Add an empty string to the array
+  };
+
+  const handleTextFieldChange = (event, index) => {
+    const updatedTextFields = [...textFields];
+    updatedTextFields[index] = event.target.value;
+    setTextFields(updatedTextFields);
+  };
   return (
     <Draggable draggableId={column} index={index}>
       {(provided) => (
@@ -47,11 +62,26 @@ const Column = ({ column, rows, index }) => {
                   {provided.placeholder}
 
                 </div>
-                <div className="flex items-end justify-end p-2">
-                    <button>
-                      <PlusCircleIcon className="h-10 w-10"/>
+                <div className="p-2">
+  {textFields.map((textField, index) => (
+    <div key={index} className="mb-2">
+      <textarea
+        value={textField}
+        onChange={(event) => handleTextFieldChange(event, index)}
+        className="rounded-lg p-2 border-2 border-gray-300 focus:border-gray-500 focus:outline-none w-full"
+        style={{ resize: "none" }}
+      />
+    </div>
+  ))}
+                </div>
+                <div className="self-end">
+                <button onClick={handleAddTextField}>
+                      <PlusCircleIcon className="h-10 w-10" />
                     </button>
-                  </div>
+                </div>
+                    
+                  
+                  
               </div>
             )}
           </Droppable>
