@@ -1,12 +1,22 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Column from "./Column";
 import { PlusIcon } from "@heroicons/react/24/solid";
 
 export default function Board() {
-    const boards = {
+
+  const handleAddList = () => {
+    const newListId = `column${Object.keys(boards).length + 1}`;
+    setBoards((prevBoards) => ({
+      ...prevBoards,
+      [newListId]: [], // Initialize the new list with an empty array
+    }));
+  };
+
+    const [boards, setBoards] = useState({
+
         column1: [
           "This is sentence 1.",
           "Here comes sentence 2.",
@@ -42,7 +52,7 @@ export default function Board() {
           "Here comes sentence Beta.",
           "We have sentence Gamma."
         ]
-      };
+      });
       
 
   useEffect(() => {
@@ -71,7 +81,7 @@ export default function Board() {
                 <div className="md:min-w-[300px] mx-3">
                     <div className="p-2 rounded-xl shadow-sm bg-white/50 cursor-pointer hover:bg-white/90">
                         <form className="flex">
-                            <PlusIcon className="h-6 w-6"/>
+                            <PlusIcon className="h-6 w-6" onClick={handleAddList}/>
                             <p>Add another list</p>
                         </form>
                     </div>
