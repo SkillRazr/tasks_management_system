@@ -24,3 +24,36 @@ export const postBoard = async (payload) => {
     body: JSON.stringify({payload}),
   }).then((resp) => resp.json());
 };
+
+export const updateBoard = async (payload) => {
+  return await fetch(`${baseUrl}/updateBoard`, {
+    headers: {
+      "Content-Type": "application/json",
+      "skillrazr-sub-app": env["NEXT_TASKS_API_KEY"],
+    },
+    method: "POST",
+    body: JSON.stringify({payload}),
+  }).then((resp) => resp.json());
+};
+
+export const postList = async (payload) => {
+  return await fetch(`${baseUrl}/postList`, {
+    headers: {
+      "Content-Type": "application/json",
+      "skillrazr-sub-app": env["NEXT_TASKS_API_KEY"],
+    },
+    method: "POST",
+    body: JSON.stringify({payload}),
+  }).then((resp) => resp.json());
+};
+
+export const addCard = async (payload) => {
+  return await fetch(`${baseUrl}/addCard`, {
+    headers: {
+      "Content-Type": "application/json",
+      "skillrazr-sub-app": env["NEXT_TASKS_API_KEY"],
+    },
+    method: "POST",
+    body: JSON.stringify({payload}),
+  }).then((resp) => resp.json());
+};

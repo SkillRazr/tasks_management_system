@@ -1,25 +1,47 @@
-'use client'
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import TodoCard from "./TodoCard";
-
-
+import { addCard } from "@/services";
 
 const Column = ({ column, rows, index }) => {
   const [textFields, setTextFields] = useState([]);
+  const [add, setAdd] = useState(false);
+  const [currentText, setCurrentText] = useState("");
 
   const handleAddTextField = () => {
     setTextFields([...textFields, ""]); // Add an empty string to the array
+    setAdd(true);
   };
 
   const handleTextFieldChange = (event, index) => {
     const updatedTextFields = [...textFields];
     updatedTextFields[index] = event.target.value;
+    setCurrentText(event.target.value);
     setTextFields(updatedTextFields);
   };
+
+  const handleCardAdd = async () => {
+    try {
+      const response = await addCard({
+        id: currentText,
+        activity: currentText,
+        createdOn: new Date().toISOString(),
+        description:"",
+        boardId: "RVqKBADpFoUaXfKSabUX",
+        listId: column,
+        position: 0,
+        status: "pending",
+        dueDate: "tmmrw",
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
-    <Draggable draggableId={column} index={index}>
+    <Draggable key={column} draggableId={column} index={index}>
       {(provided) => (
         <div
           {...provided.draggableProps}
@@ -45,12 +67,12 @@ const Column = ({ column, rows, index }) => {
 
                 <div className="space-y-2 overflow-y-auto scrollbar-thin max-h-[calc(73vh-100px)]">
                   {rows.map((row, index) => (
-                    <Draggable key={index} draggableId={row} index={index}>
+                    <Draggable key={row.id} draggableId={row.id} index={index}>
                       {(provided) => (
                         <TodoCard
                           row={row}
                           index={index}
-                          id={row}
+                          id={row.id}
                           innerRef={provided.innerRef}
                           draggableProps={provided.draggableProps}
                           dragHandleProps={provided.dragHandleProps}
@@ -60,28 +82,30 @@ const Column = ({ column, rows, index }) => {
                   ))}
 
                   {provided.placeholder}
-
                 </div>
                 <div className="p-2">
-  {textFields.map((textField, index) => (
-    <div key={index} className="mb-2">
-      <textarea
-        value={textField}
-        onChange={(event) => handleTextFieldChange(event, index)}
-        className="rounded-lg p-2 border-2 border-gray-300 focus:border-gray-500 focus:outline-none w-full"
-        style={{ resize: "none" }}
-      />
-    </div>
-  ))}
+                  {textFields.map((textField, index) => (
+                    <div key={index} className="mb-2">
+                      <textarea
+                        value={textField}
+                        onChange={(event) =>
+                          handleTextFieldChange(event, index)
+                        }
+                        className="rounded-lg p-2 border-2 border-gray-300 focus:border-gray-500 focus:outline-none w-full"
+                        style={{ resize: "none" }}
+                      />
+                    </div>
+                  ))}
                 </div>
-                <div className="self-end">
-                <button onClick={handleAddTextField}>
-                      <PlusCircleIcon className="h-10 w-10" />
-                    </button>
+                <div className="flex justify-between items-center">
+                  {
+                    add &&
+                    <button className="bg-black rounded text-white px-2 py-1" onClick={handleCardAdd}>Add</button>
+                  }
+                  <button onClick={handleAddTextField}>
+                    <PlusCircleIcon className="h-10 w-10" />
+                  </button>
                 </div>
-                    
-                  
-                  
               </div>
             )}
           </Droppable>
