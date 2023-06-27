@@ -2,7 +2,8 @@ import React from 'react';
 import logo from "@/assets/Skillrazr_logo.svg";
 import Image from "next/image";
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
-import DropdownMenu from './DropdownMenu';
+import DropdownMenu from './DropdownButton';
+import DropdownButton from './DropdownButton';
 
 
 
@@ -43,7 +44,7 @@ export default function Header() {
           className="w-44 pb-10 md:pb-0 object-contain"
         />
         <div>
-        <DropdownMenu />
+        <DropdownButton />
         </div>
         
         <div className="flex items-center space-x-5 flex-1 justify-end w-full">
