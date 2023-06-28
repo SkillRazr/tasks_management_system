@@ -16,7 +16,8 @@ const TodoCard = ({
       ref={innerRef}
     >
         <div className="flex items-center justify-between p-5">
-            <p>{row}</p>
+          {/* should be changed to row.activity */}
+            <p>{row.id}</p>
         </div>
     </div>
   );
