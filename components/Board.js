@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Column from "./Column";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { getBoard, postBoard, postList, updateBoard } from "@/services";
+import { getBoard, addBoard, addColumn, updateBoard } from "@/services";
 
 export default function Board() {
   const [board, setBoard] = useState();
@@ -12,14 +12,21 @@ export default function Board() {
 
   const handleAddList = async () => {
     const newListId = `column${Object.keys(lists).length + 1}`;
-    setLists((prevLists) => ({
-      ...prevLists,
-      [newListId]: [], // Initialize the new list with an empty array
-    }));
-    const res = await postList({
+    const newList = {
       id: newListId,
-      title: newListId,
-    });
+      title: `${newListId}_title`,
+    };
+
+    try {
+      const res = await postList(newList);
+
+      setLists((prevLists) => ({
+        ...prevLists,
+        [newListId]: [],
+      }));
+    } catch (e) {
+      console.log("error adding a new column", e);
+    }
   };
 
   useEffect(() => {
@@ -54,7 +61,7 @@ export default function Board() {
     }
     setLists(lists);
   };
-  
+
   const handleOnDragEnd = async (result) => {
     const { destination, source, type } = result;
     // console.log( destination, source, type );
@@ -67,7 +74,7 @@ export default function Board() {
       const b = { ...board, settings: rearranged };
       setBoard(b);
       fetchBoard(b);
-      const res = await updateBoard(b)
+      const res = await updateBoard(b);
     }
 
     try {
@@ -82,21 +89,20 @@ export default function Board() {
         }
         return card;
       });
-  
+
       const updatedBoard = { ...board, cards: updatedCards };
       setBoard(updatedBoard);
       fetchBoard(updatedBoard);
       const res = await updateBoard(updatedBoard);
-    } catch (error) {  
+    } catch (error) {
       console.log(error.message);
     }
-
   };
 
   const getColumnName = (columnId) => {
-    const columnSetting = board.settings.find(item => item.id === columnId);
-    return columnSetting.title;
-  }
+    const columnSetting = board.settings.find((item) => item.id === columnId);
+    return columnSetting && columnSetting.title;
+  };
 
   return (
     <div className="boards overflow-x-auto mx-3 scrollbar-thin scrollbar-thumb-zinc-300">

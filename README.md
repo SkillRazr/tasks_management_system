@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Task manager
+
+This Task management project is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
@@ -12,11 +14,24 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to access the App.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Local development setup
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This App uses Firebase for storing App data, hosting and App APIs. To get the APIs locally working, you can start the firebase emulator using below command
+
+### To start Firebase emulator
+
+`firebase emulators:start` it assumes you've firebase available in your system, if not install it.
+
+## Todos
+
+There are many basic functionalities missing in the App.
+Your job is to identify and complete a task, that showcases your skills as a developer. The task should highlight your skills as a developer, writing clean code, unit tests as applicable, adding responsive and good looking ui along with writing any required APIs.
+
+To help you pick a task, in this repo there are few //Todo notes, that will give you some heads on.
+
+You can also mock APIs when needed.
 
 ## Learn More
 
@@ -26,9 +41,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
