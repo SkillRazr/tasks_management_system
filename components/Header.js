@@ -2,10 +2,12 @@ import React from "react";
 import logo from "@/assets/Skillrazr_logo.svg";
 import Image from "next/image";
 import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
-import DropdownMenu from "./DropdownMenu";
 
 export default function Header() {
-  const boardsList = ["skilrazr apr", "skilrazr may", "skilrazr jun"];
+  //Todo fetch all available boards and render their names,
+  // on clicking a board it should navigate to the board and render the columns and cards in the board
+
+  const boardsList = ["SkillRazr Apr", "SkillRazr May", "SkillRazr Jun"];
   return (
     <header>
       <div className="flex flex-col md:flex-row items-center px-3 py-2 bg-slate-500/10 rounded-b-2xl">
@@ -31,9 +33,9 @@ export default function Header() {
           alt="logo"
           className="w-44 pb-10 md:pb-0 object-contain"
         />
-        <div>
+        {/* <div>
           <DropdownMenu />
-        </div>
+        </div> */}
 
         <div className="flex items-center space-x-5 flex-1 justify-end w-full">
           <div className="flex relative">
@@ -60,12 +62,6 @@ export default function Header() {
               Search
             </button>
           </form>
-          {/* Share Button */}
-          <div>
-            <button className="bg-pink-500 px-4 rounded-lg py-2 text-white mr-2 shadow-lg">
-              Share
-            </button>
-          </div>
         </div>
       </div>
       {/* select months */}

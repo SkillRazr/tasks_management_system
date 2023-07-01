@@ -4,21 +4,29 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Column from "./Column";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { getBoard, postBoard, postList, updateBoard } from "@/services";
+import { getBoard, addBoard, addColumn, updateBoard } from "@/services";
 
 export default function Board() {
   const [board, setBoard] = useState();
+  const [lists, setLists] = useState({});
 
   const handleAddList = async () => {
     const newListId = `column${Object.keys(lists).length + 1}`;
-    setLists((prevLists) => ({
-      ...prevLists,
-      [newListId]: [], // Initialize the new list with an empty array
-    }));
-    const res = await postList({
+    const newList = {
       id: newListId,
-      title: newListId,
-    });
+      title: `${newListId}_title`,
+    };
+
+    try {
+      const res = await postList(newList);
+
+      setLists((prevLists) => ({
+        ...prevLists,
+        [newListId]: [],
+      }));
+    } catch (e) {
+      console.log("error adding a new column", e);
+    }
   };
 
   useEffect(() => {
@@ -28,10 +36,10 @@ export default function Board() {
       setBoard(board);
       const lists = {};
       for (const list of board.settings) {
-        lists[list.title] = [];
+        lists[list.id] = [];
         for (const card of board.cards) {
           if (card.listId === list.id) {
-            lists[list.title].push(card);
+            lists[list.id].push(card);
           }
         }
       }
@@ -44,17 +52,15 @@ export default function Board() {
   const fetchBoard = async (board) => {
     const lists = {};
     for (const list of board.settings) {
-      lists[list.title] = [];
+      lists[list.id] = [];
       for (const card of board.cards) {
         if (card.listId === list.id) {
-          lists[list.title].push(card);
+          lists[list.id].push(card);
         }
       }
     }
     setLists(lists);
   };
-
-  const [lists, setLists] = useState({});
 
   const handleOnDragEnd = async (result) => {
     const { destination, source, type } = result;
@@ -68,30 +74,34 @@ export default function Board() {
       const b = { ...board, settings: rearranged };
       setBoard(b);
       fetchBoard(b);
-      const res = await updateBoard(b)
+      const res = await updateBoard(b);
     }
 
     try {
       const start = board.settings[Number(source.droppableId)];
       const end = board.settings[Number(destination.droppableId)];
-      const startCard = lists[start.title][source.index];
+      const startCard = lists[start.id][source.index];
       // const endCard = lists[end.title][destination.index]
       const cards = board.cards;
       const updatedCards = cards.map((card) => {
         if (card === startCard) {
-          return { ...card, listId: end.title };
+          return { ...card, listId: end.id };
         }
         return card;
       });
-  
+
       const updatedBoard = { ...board, cards: updatedCards };
       setBoard(updatedBoard);
       fetchBoard(updatedBoard);
       const res = await updateBoard(updatedBoard);
-    } catch (error) {  
+    } catch (error) {
       console.log(error.message);
     }
+  };
 
+  const getColumnName = (columnId) => {
+    const columnSetting = board.settings.find((item) => item.id === columnId);
+    return columnSetting && columnSetting.title;
   };
 
   return (
@@ -111,6 +121,7 @@ export default function Board() {
                     rows={rows}
                     column={column}
                     index={index}
+                    title={getColumnName(column)}
                   />
                 ))}
               </div>
