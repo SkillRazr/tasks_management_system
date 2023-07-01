@@ -5,7 +5,7 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import TodoCard from "./TodoCard";
 import { addCard } from "@/services";
 
-const Column = ({ column, rows, index }) => {
+const Column = ({ column, title, rows, index }) => {
   const [textFields, setTextFields] = useState([]);
   const [add, setAdd] = useState(false);
   const [currentText, setCurrentText] = useState("");
@@ -39,6 +39,7 @@ const Column = ({ column, rows, index }) => {
       console.log(error);
     }
   }
+  console.log('columne', column);
 
   return (
     <Draggable key={column} draggableId={column} index={index}>
@@ -59,7 +60,7 @@ const Column = ({ column, rows, index }) => {
                 }`}
               >
                 <h2 className="capitalize flex justify-between font-bold text-xl p-2">
-                  {column}
+                  {title}
                   <span className="text-gray-500 bg-gray-200 rounded-full px-2 py-1 text-sm">
                     {rows.length}
                   </span>

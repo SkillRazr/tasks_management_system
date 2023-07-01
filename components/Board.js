@@ -8,6 +8,7 @@ import { getBoard, postBoard, postList, updateBoard } from "@/services";
 
 export default function Board() {
   const [board, setBoard] = useState();
+  const [lists, setLists] = useState({});
 
   const handleAddList = async () => {
     const newListId = `column${Object.keys(lists).length + 1}`;
@@ -28,10 +29,10 @@ export default function Board() {
       setBoard(board);
       const lists = {};
       for (const list of board.settings) {
-        lists[list.title] = [];
+        lists[list.id] = [];
         for (const card of board.cards) {
           if (card.listId === list.id) {
-            lists[list.title].push(card);
+            lists[list.id].push(card);
           }
         }
       }
@@ -44,18 +45,16 @@ export default function Board() {
   const fetchBoard = async (board) => {
     const lists = {};
     for (const list of board.settings) {
-      lists[list.title] = [];
+      lists[list.id] = [];
       for (const card of board.cards) {
         if (card.listId === list.id) {
-          lists[list.title].push(card);
+          lists[list.id].push(card);
         }
       }
     }
     setLists(lists);
   };
-
-  const [lists, setLists] = useState({});
-
+  
   const handleOnDragEnd = async (result) => {
     const { destination, source, type } = result;
     // console.log( destination, source, type );
@@ -74,12 +73,12 @@ export default function Board() {
     try {
       const start = board.settings[Number(source.droppableId)];
       const end = board.settings[Number(destination.droppableId)];
-      const startCard = lists[start.title][source.index];
+      const startCard = lists[start.id][source.index];
       // const endCard = lists[end.title][destination.index]
       const cards = board.cards;
       const updatedCards = cards.map((card) => {
         if (card === startCard) {
-          return { ...card, listId: end.title };
+          return { ...card, listId: end.id };
         }
         return card;
       });
@@ -93,6 +92,11 @@ export default function Board() {
     }
 
   };
+
+  const getColumnName = (columnId) => {
+    const columnSetting = board.settings.find(item => item.id === columnId);
+    return columnSetting.title;
+  }
 
   return (
     <div className="boards overflow-x-auto mx-3 scrollbar-thin scrollbar-thumb-zinc-300">
@@ -111,6 +115,7 @@ export default function Board() {
                     rows={rows}
                     column={column}
                     index={index}
+                    title={getColumnName(column)}
                   />
                 ))}
               </div>

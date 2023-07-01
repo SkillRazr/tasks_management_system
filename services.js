@@ -1,7 +1,8 @@
 import env from "@/.env.json";
 
 const baseUrl =
-  "http://127.0.0.1:5001/skillrazr-mobile/asia-south1/skillRazrTest";
+"http://localhost:5001/genlent-8aab7/asia-south1/skillRazrTasks-api";
+
 
 export const getBoard = async () => {
   return await fetch(`${baseUrl}/getBoard`, {
