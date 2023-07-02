@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8082",
+    "dev": "next dev",
     "build": "NEXT_PUBLIC_APP_ENV=production next build && next export",
     "start": "next start",
     "lint": "next lint"
